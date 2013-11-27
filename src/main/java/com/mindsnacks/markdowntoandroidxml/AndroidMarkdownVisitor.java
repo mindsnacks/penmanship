@@ -1,4 +1,4 @@
-package com.mindsnacks.markdowntoandroid;
+package com.mindsnacks.markdowntoandroidxml;
 
 import org.pegdown.ast.*;
 
@@ -90,7 +90,7 @@ public class AndroidMarkdownVisitor implements Visitor {
 
     @Override
     public void visit(ParaNode paraNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        visitChildren(paraNode);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class AndroidMarkdownVisitor implements Visitor {
 
     @Override
     public void visit(RootNode rootNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        visitChildren(rootNode);
     }
 
     @Override
@@ -185,11 +185,20 @@ public class AndroidMarkdownVisitor implements Visitor {
 
     @Override
     public void visit(SuperNode superNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        visitChildren(superNode);
     }
 
     @Override
     public void visit(Node node) {
         //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    // Helpers
+    protected void visitChildren(SuperNode node) {
+        for (Node child : node.getChildren()) {
+            System.out.println("Going to visit: " + child.getClass());
+            child.accept(this);
+            System.out.println("Done visiting: " + child.getClass());
+        }
     }
 }

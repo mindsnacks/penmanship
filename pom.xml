@@ -23,7 +23,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
                 <configuration>
-                    <mainClass>com.mindsnacks.markdowntoandroid.MarkdownToAndroidXML</mainClass>
+                    <mainClass>com.mindsnacks.markdowntoandroidxml.MarkdownToAndroidXML</mainClass>
                 </configuration>
             </plugin>
         </plugins>
