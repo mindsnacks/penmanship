@@ -5,7 +5,7 @@ package com.mindsnacks.markdowntoandroid;
  * Date: 11/26/13
  * Time: 4:50 PM
  */
-public class MarkdownToXML {
+public class MarkdownToAndroidXML {
     public static void main(String[] args) {
         System.out.println("Hello");
     }
