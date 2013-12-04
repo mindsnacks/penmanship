@@ -6,51 +6,11 @@ import org.pegdown.Printer;
 import org.pegdown.ast.*;
 
 /** Created by Tony Cosentini Date: 11/26/13 Time: 5:04 PM */
-public class AndroidMarkdownVisitor implements Visitor {
+public class AndroidMarkdownVisitor extends BaseVisitor {
   Printer printer = new Printer();
 
   private enum NodeGroupType {
     TEXT_NODE_GROUP, IMAGE_NODE_GROUP
-  }
-
-  @Override
-  public void visit(AbbreviationNode abbreviationNode) {
-  }
-
-  @Override
-  public void visit(AutoLinkNode autoLinkNode) {
-  }
-
-  @Override
-  public void visit(BlockQuoteNode blockQuoteNode) {
-  }
-
-  @Override
-  public void visit(BulletListNode bulletListNode) {
-  }
-
-  @Override
-  public void visit(CodeNode codeNode) {
-  }
-
-  @Override
-  public void visit(DefinitionListNode definitionListNode) {
-  }
-
-  @Override
-  public void visit(DefinitionNode definitionNode) {
-  }
-
-  @Override
-  public void visit(DefinitionTermNode definitionTermNode) {
-  }
-
-  @Override
-  public void visit(ExpImageNode expImageNode) {
-  }
-
-  @Override
-  public void visit(ExpLinkNode expLinkNode) {
   }
 
   @Override
@@ -59,44 +19,8 @@ public class AndroidMarkdownVisitor implements Visitor {
   }
 
   @Override
-  public void visit(HtmlBlockNode htmlBlockNode) {
-  }
-
-  @Override
-  public void visit(InlineHtmlNode inlineHtmlNode) {
-  }
-
-  @Override
-  public void visit(ListItemNode listItemNode) {
-  }
-
-  @Override
-  public void visit(MailLinkNode mailLinkNode) {
-  }
-
-  @Override
-  public void visit(OrderedListNode orderedListNode) {
-  }
-
-  @Override
   public void visit(ParaNode paraNode) {
     visitChildren(paraNode);
-  }
-
-  @Override
-  public void visit(QuotedNode quotedNode) {
-  }
-
-  @Override
-  public void visit(ReferenceNode referenceNode) {
-  }
-
-  @Override
-  public void visit(RefImageNode refImageNode) {
-  }
-
-  @Override
-  public void visit(RefLinkNode refLinkNode) {
   }
 
   @Override
@@ -114,58 +38,6 @@ public class AndroidMarkdownVisitor implements Visitor {
     printer.print("</LinearLayout>\n");
     printer.print("</ScrollView>\n");
     printer.print("</LinearLayout>\n");
-  }
-
-  @Override
-  public void visit(SimpleNode simpleNode) {
-  }
-
-  @Override
-  public void visit(SpecialTextNode specialTextNode) {
-  }
-
-  @Override
-  public void visit(StrongEmphSuperNode strongEmphSuperNode) {
-  }
-
-  @Override
-  public void visit(TableBodyNode tableBodyNode) {
-  }
-
-  @Override
-  public void visit(TableCaptionNode tableCaptionNode) {
-  }
-
-  @Override
-  public void visit(TableCellNode tableCellNode) {
-  }
-
-  @Override
-  public void visit(TableColumnNode tableColumnNode) {
-  }
-
-  @Override
-  public void visit(TableHeaderNode tableHeaderNode) {
-  }
-
-  @Override
-  public void visit(TableNode tableNode) {
-  }
-
-  @Override
-  public void visit(TableRowNode tableRowNode) {
-  }
-
-  @Override
-  public void visit(VerbatimNode verbatimNode) {
-  }
-
-  @Override
-  public void visit(WikiLinkNode wikiLinkNode) {
-  }
-
-  @Override
-  public void visit(TextNode textNode) {
   }
 
   @Override
