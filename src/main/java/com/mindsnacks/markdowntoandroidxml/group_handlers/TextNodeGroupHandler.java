@@ -61,7 +61,7 @@ public class TextNodeGroupHandler extends BaseHandler {
         return validTextNodes.contains(node.getClass());
     }
 
-    public static boolean isValidTextNodeGroup(Node node) {
+    public static boolean isValidNodeGroup(Node node) {
         boolean result = true;
 
         for (Node child : node.getChildren()) {

@@ -1,5 +1,6 @@
 package com.mindsnacks.markdowntoandroidxml;
 
+import com.mindsnacks.markdowntoandroidxml.group_handlers.ImageGroupHandler;
 import com.mindsnacks.markdowntoandroidxml.group_handlers.TextNodeGroupHandler;
 import org.pegdown.Printer;
 import org.pegdown.ast.*;
@@ -100,7 +101,19 @@ public class AndroidMarkdownVisitor implements Visitor {
 
   @Override
   public void visit(RootNode rootNode) {
+    printer.print("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+    printer.print("<LinearLayout android:layout_width=\"match_parent\"\n"
+        + "  android:layout_height=\"match_parent\">\n");
+    printer.print("<ScrollView android:layout_width=\"match_parent\"\n"
+        + "  android:layout_height=\"match_parent\">\n");
+    printer.print("<LinearLayout android:layout_width=\"match_parent\"\n"
+        + "  android:layout_height=\"wrap_content\">\n");
+
     visitChildren(rootNode);
+
+    printer.print("</LinearLayout>\n");
+    printer.print("</ScrollView>\n");
+    printer.print("</LinearLayout>\n");
   }
 
   @Override
@@ -166,9 +179,11 @@ public class AndroidMarkdownVisitor implements Visitor {
 
   // Helpers
   private NodeGroupType getNodeGroupType(Node node) {
-    if (TextNodeGroupHandler.isValidTextNodeGroup(node)) {
+    if (TextNodeGroupHandler.isValidNodeGroup(node)) {
       return NodeGroupType.TEXT_NODE_GROUP;
-    } else {
+    } else if (ImageGroupHandler.isValidNodeGroup(node)) {
+      return NodeGroupType.IMAGE_NODE_GROUP;
+    }else {
       throw new RuntimeException("Unable to determine node group type.");
     }
   }
@@ -194,11 +209,18 @@ public class AndroidMarkdownVisitor implements Visitor {
       handleTextNodeGroup(node);
 
       printer.print("\"/>\n");
+    } else {
+      handleImageNodeGroup(node);
     }
   }
 
   private void handleTextNodeGroup(Node node) {
     TextNodeGroupHandler textNodeGroupHandler = new TextNodeGroupHandler(node, printer);
     textNodeGroupHandler.handle();
+  }
+
+  private void handleImageNodeGroup(Node node) {
+    ImageGroupHandler imageGroupHandler = new ImageGroupHandler(node, printer);
+    imageGroupHandler.handle();
   }
 }

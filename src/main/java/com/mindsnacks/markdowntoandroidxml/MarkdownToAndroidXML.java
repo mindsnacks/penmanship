@@ -14,7 +14,7 @@ public class MarkdownToAndroidXML {
 
         //String markdown = "Hello! **how** are you doing?\nThis should be another textview.\n\n![image junk](image description)";
 
-        String markdown = "# Fuck yeah it's a header. Hello! **how** are you doing?\n\nIt has beautiful newlines with _emphasis_ and escaped quotes\". [This is a link](http://google.com). Pretty cool, right?";
+        String markdown = "# Fuck yeah it's a header. Hello! **how** are you doing?\n\nIt has beautiful new\n\n![Alt text](/path/to/img.jpg)\n\nlines with _emphasis_ and escaped quotes\". [This is a link](http://google.com). Pretty cool, right?";
 
         PegDownProcessor pegDownProcessor = new PegDownProcessor();
         RootNode rootNode = pegDownProcessor.parseMarkdown(markdown.toCharArray());
