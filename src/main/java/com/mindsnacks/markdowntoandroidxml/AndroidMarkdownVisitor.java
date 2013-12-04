@@ -1,204 +1,204 @@
 package com.mindsnacks.markdowntoandroidxml;
 
+import com.mindsnacks.markdowntoandroidxml.group_handlers.TextNodeGroupHandler;
+import org.pegdown.Printer;
 import org.pegdown.ast.*;
 
-/**
- * Created by Tony Cosentini
- * Date: 11/26/13
- * Time: 5:04 PM
- */
+/** Created by Tony Cosentini Date: 11/26/13 Time: 5:04 PM */
 public class AndroidMarkdownVisitor implements Visitor {
-    @Override
-    public void visit(AbbreviationNode abbreviationNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  Printer printer = new Printer();
 
-    @Override
-    public void visit(AutoLinkNode autoLinkNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  private enum NodeGroupType {
+    TEXT_NODE_GROUP, IMAGE_NODE_GROUP
+  }
 
-    @Override
-    public void visit(BlockQuoteNode blockQuoteNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(AbbreviationNode abbreviationNode) {
+  }
 
-    @Override
-    public void visit(BulletListNode bulletListNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(AutoLinkNode autoLinkNode) {
+  }
 
-    @Override
-    public void visit(CodeNode codeNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(BlockQuoteNode blockQuoteNode) {
+  }
 
-    @Override
-    public void visit(DefinitionListNode definitionListNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(BulletListNode bulletListNode) {
+  }
 
-    @Override
-    public void visit(DefinitionNode definitionNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(CodeNode codeNode) {
+  }
 
-    @Override
-    public void visit(DefinitionTermNode definitionTermNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(DefinitionListNode definitionListNode) {
+  }
 
-    @Override
-    public void visit(ExpImageNode expImageNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(DefinitionNode definitionNode) {
+  }
 
-    @Override
-    public void visit(ExpLinkNode expLinkNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(DefinitionTermNode definitionTermNode) {
+  }
 
-    @Override
-    public void visit(HeaderNode headerNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(ExpImageNode expImageNode) {
+  }
 
-    @Override
-    public void visit(HtmlBlockNode htmlBlockNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(ExpLinkNode expLinkNode) {
+  }
 
-    @Override
-    public void visit(InlineHtmlNode inlineHtmlNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(HeaderNode headerNode) {
+    createTextView(headerNode, String.format("header_%d", headerNode.getLevel()));
+  }
 
-    @Override
-    public void visit(ListItemNode listItemNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(HtmlBlockNode htmlBlockNode) {
+  }
 
-    @Override
-    public void visit(MailLinkNode mailLinkNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(InlineHtmlNode inlineHtmlNode) {
+  }
 
-    @Override
-    public void visit(OrderedListNode orderedListNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(ListItemNode listItemNode) {
+  }
 
-    @Override
-    public void visit(ParaNode paraNode) {
-        visitChildren(paraNode);
-    }
+  @Override
+  public void visit(MailLinkNode mailLinkNode) {
+  }
 
-    @Override
-    public void visit(QuotedNode quotedNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(OrderedListNode orderedListNode) {
+  }
 
-    @Override
-    public void visit(ReferenceNode referenceNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(ParaNode paraNode) {
+    visitChildren(paraNode);
+  }
 
-    @Override
-    public void visit(RefImageNode refImageNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(QuotedNode quotedNode) {
+  }
 
-    @Override
-    public void visit(RefLinkNode refLinkNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(ReferenceNode referenceNode) {
+  }
 
-    @Override
-    public void visit(RootNode rootNode) {
-        visitChildren(rootNode);
-    }
+  @Override
+  public void visit(RefImageNode refImageNode) {
+  }
 
-    @Override
-    public void visit(SimpleNode simpleNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(RefLinkNode refLinkNode) {
+  }
 
-    @Override
-    public void visit(SpecialTextNode specialTextNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(RootNode rootNode) {
+    visitChildren(rootNode);
+  }
 
-    @Override
-    public void visit(StrongEmphSuperNode strongEmphSuperNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(SimpleNode simpleNode) {
+  }
 
-    @Override
-    public void visit(TableBodyNode tableBodyNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(SpecialTextNode specialTextNode) {
+  }
 
-    @Override
-    public void visit(TableCaptionNode tableCaptionNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(StrongEmphSuperNode strongEmphSuperNode) {
+  }
 
-    @Override
-    public void visit(TableCellNode tableCellNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(TableBodyNode tableBodyNode) {
+  }
 
-    @Override
-    public void visit(TableColumnNode tableColumnNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(TableCaptionNode tableCaptionNode) {
+  }
 
-    @Override
-    public void visit(TableHeaderNode tableHeaderNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(TableCellNode tableCellNode) {
+  }
 
-    @Override
-    public void visit(TableNode tableNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(TableColumnNode tableColumnNode) {
+  }
 
-    @Override
-    public void visit(TableRowNode tableRowNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(TableHeaderNode tableHeaderNode) {
+  }
 
-    @Override
-    public void visit(VerbatimNode verbatimNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(TableNode tableNode) {
+  }
 
-    @Override
-    public void visit(WikiLinkNode wikiLinkNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(TableRowNode tableRowNode) {
+  }
 
-    @Override
-    public void visit(TextNode textNode) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(VerbatimNode verbatimNode) {
+  }
 
-    @Override
-    public void visit(SuperNode superNode) {
-        visitChildren(superNode);
-    }
+  @Override
+  public void visit(WikiLinkNode wikiLinkNode) {
+  }
 
-    @Override
-    public void visit(Node node) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+  @Override
+  public void visit(TextNode textNode) {
+  }
 
-    // Helpers
-    protected void visitChildren(SuperNode node) {
-        for (Node child : node.getChildren()) {
-            System.out.println("Going to visit: " + child.getClass());
-            child.accept(this);
-            System.out.println("Done visiting: " + child.getClass());
-        }
+  @Override
+  public void visit(SuperNode superNode) {
+    createTextView(superNode, null);
+  }
+
+  @Override
+  public void visit(Node node) {
+  }
+
+  // Helpers
+  private NodeGroupType getNodeGroupType(Node node) {
+    if (TextNodeGroupHandler.isValidTextNodeGroup(node)) {
+      return NodeGroupType.TEXT_NODE_GROUP;
+    } else {
+      throw new RuntimeException("Unable to determine node group type.");
     }
+  }
+
+  protected void visitChildren(SuperNode node) {
+    for (Node child : node.getChildren()) {
+      child.accept(this);
+    }
+  }
+
+  private void createTextView(Node node, String style) {
+    NodeGroupType nodeGroupType = getNodeGroupType(node);
+    if (nodeGroupType.equals(NodeGroupType.TEXT_NODE_GROUP)) {
+      printer.print("<TextView android:layout_width=\"match_parent\"\n" +
+          "  android:layout_height=\"wrap_content\"\n");
+
+      if (style != null) {
+        printer.print(String.format("  style=\"%s\"\n", style));
+      }
+
+      printer.print("  android:text=\"");
+
+      handleTextNodeGroup(node);
+
+      printer.print("\"/>\n");
+    }
+  }
+
+  private void handleTextNodeGroup(Node node) {
+    TextNodeGroupHandler textNodeGroupHandler = new TextNodeGroupHandler(node, printer);
+    textNodeGroupHandler.handle();
+  }
 }

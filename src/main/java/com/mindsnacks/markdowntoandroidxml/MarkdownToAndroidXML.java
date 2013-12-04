@@ -12,38 +12,16 @@ public class MarkdownToAndroidXML {
     public static void main(String[] args) {
         System.out.println("Starting parser!");
 
-        String markdown = "Hello! **how** are you doing?\nThis should be another textview.\n\n![image junk](image description)";
+        //String markdown = "Hello! **how** are you doing?\nThis should be another textview.\n\n![image junk](image description)";
+
+        String markdown = "# Fuck yeah it's a header. Hello! **how** are you doing?\n\nIt has beautiful newlines with _emphasis_ and escaped quotes\". [This is a link](http://google.com). Pretty cool, right?";
 
         PegDownProcessor pegDownProcessor = new PegDownProcessor();
         RootNode rootNode = pegDownProcessor.parseMarkdown(markdown.toCharArray());
 
         AndroidMarkdownVisitor androidMarkdownVisitor = new AndroidMarkdownVisitor();
         androidMarkdownVisitor.visit(rootNode);
+
+        System.out.println(androidMarkdownVisitor.printer.getString());
     }
 }
-
-/*
-org.pegdown.ast.ParaNode
-  org.pegdown.ast.SuperNode
-    org.pegdown.ast.TextNode
-    org.pegdown.ast.TextNode
-    org.pegdown.ast.SpecialTextNode
-    org.pegdown.ast.SpecialTextNode
-    org.pegdown.ast.TextNode
-    org.pegdown.ast.TextNode
-    org.pegdown.ast.StrongEmphSuperNode
-    org.pegdown.ast.StrongEmphSuperNode
-    org.pegdown.ast.TextNode
-    org.pegdown.ast.TextNode
-  org.pegdown.ast.SuperNode
-org.pegdown.ast.ParaNode
-
-org.pegdown.ast.ParaNode
-  org.pegdown.ast.SuperNode
-    org.pegdown.ast.RefImageNode
-    org.pegdown.ast.RefImageNode
-    org.pegdown.ast.TextNode
-    org.pegdown.ast.TextNode
-  org.pegdown.ast.SuperNode
-org.pegdown.ast.ParaNode
-*/
