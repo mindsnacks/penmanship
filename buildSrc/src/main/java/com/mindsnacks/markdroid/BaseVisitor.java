@@ -1,4 +1,4 @@
-package com.mindsnacks.markdowntoandroidxml;
+package com.mindsnacks.markdroid;
 
 import org.pegdown.ast.AbbreviationNode;
 import org.pegdown.ast.AutoLinkNode;

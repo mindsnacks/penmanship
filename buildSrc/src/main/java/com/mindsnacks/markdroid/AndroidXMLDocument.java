@@ -1,4 +1,4 @@
-package com.mindsnacks.markdowntoandroidxml;
+package com.mindsnacks.markdroid;
 
 /**
  * Created by Tony Cosentini

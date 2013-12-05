@@ -1,7 +1,7 @@
-package com.mindsnacks.markdowntoandroidxml;
+package com.mindsnacks.markdroid;
 
-import com.mindsnacks.markdowntoandroidxml.group_handlers.ImageGroupHandler;
-import com.mindsnacks.markdowntoandroidxml.group_handlers.TextNodeGroupHandler;
+import com.mindsnacks.markdroid.group_handlers.ImageGroupHandler;
+import com.mindsnacks.markdroid.group_handlers.TextNodeGroupHandler;
 import org.pegdown.Printer;
 import org.pegdown.ast.*;
 

@@ -30,6 +30,11 @@ proguard/
 *.iws
 .idea/
 
+# Gradle
+.gradle/
+buildSrc/build/
+local.properties
+
 # Other stuff
 out/
 .DS_Store

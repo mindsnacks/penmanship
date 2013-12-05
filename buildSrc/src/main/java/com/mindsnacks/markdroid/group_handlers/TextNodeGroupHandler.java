@@ -1,4 +1,4 @@
-package com.mindsnacks.markdowntoandroidxml.group_handlers;
+package com.mindsnacks.markdroid.group_handlers;
 
 import org.pegdown.Printer;
 import org.pegdown.ast.*;
