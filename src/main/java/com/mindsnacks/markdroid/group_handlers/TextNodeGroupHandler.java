@@ -27,10 +27,10 @@ public class TextNodeGroupHandler extends BaseHandler {
 
             if (childClass.equals(TextNode.class)) {
                 TextNode textNode = (TextNode)child;
-                printWithEscapedQuotes(textNode.getText());
+                printer.printEncoded(textNode.getText());
             } else if (childClass.equals(SpecialTextNode.class)) {
                 SpecialTextNode textNode = (SpecialTextNode)child;
-                printWithEscapedQuotes(textNode.getText());
+                printer.printEncoded(textNode.getText());
             } else if (childClass .equals(StrongEmphSuperNode.class)) {
                 StrongEmphSuperNode strongEmphSuperNode = (StrongEmphSuperNode)child;
 
@@ -39,14 +39,14 @@ public class TextNodeGroupHandler extends BaseHandler {
                     tag = "b";
                 }
 
-                printer.print(String.format("<%s>", tag));
+                printer.printEncoded(String.format("<%s>", tag));
                 handleTextNodeGroup(strongEmphSuperNode);
-                printer.print(String.format("</%s>", tag));
+                printer.printEncoded(String.format("</%s>", tag));
             } else if (childClass.equals(ExpLinkNode.class)) {
                 ExpLinkNode linkNode = (ExpLinkNode)child;
-                printer.print(String.format("<a href=\\\"%s\\\">", linkNode.url));
+                printer.printEncoded(String.format("<a href=\\\"%s\\\">", linkNode.url));
                 handleTextNodeGroup(linkNode);
-                printer.print("</a>");
+                printer.printEncoded("</a>");
             } else if (childClass.equals(SuperNode.class)) {
                 handleTextNodeGroup((SuperNode)child);
             } else {

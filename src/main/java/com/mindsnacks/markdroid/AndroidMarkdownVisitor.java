@@ -26,7 +26,8 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
   @Override
   public void visit(RootNode rootNode) {
     printer.print("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-    printer.print("<LinearLayout android:layout_width=\"match_parent\"\n"
+    printer.print("<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n"
+        + "  android:layout_width=\"match_parent\"\n"
         + "  android:layout_height=\"match_parent\">\n");
     printer.print("<ScrollView android:layout_width=\"match_parent\"\n"
         + "  android:layout_height=\"match_parent\">\n");

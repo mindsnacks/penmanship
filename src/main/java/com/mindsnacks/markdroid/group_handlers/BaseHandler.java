@@ -12,13 +12,4 @@ public abstract class BaseHandler {
     this.rootNode = rootNode;
     this.printer = printer;
   }
-
-  protected String getStringWithEscapedQuotes(String text) {
-    return text.replace("\"", "\\\"");
-  }
-
-  protected void printWithEscapedQuotes(String text) {
-    String escapedText = getStringWithEscapedQuotes(text);
-    printer.print(escapedText);
-  }
 }
