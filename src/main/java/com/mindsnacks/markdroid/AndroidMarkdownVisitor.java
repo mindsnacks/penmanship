@@ -31,8 +31,11 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
         + "  android:layout_height=\"match_parent\">\n");
     printer.print("<ScrollView android:layout_width=\"match_parent\"\n"
         + "  android:layout_height=\"match_parent\">\n");
-    printer.print("<LinearLayout android:layout_width=\"match_parent\"\n"
-        + "  android:layout_height=\"wrap_content\">\n");
+    printer.print("<LinearLayout android:id=\"@+id/markdown_content\"\n"
+        + "  style=\"@style/markdown_content\"\n"
+        + "  android:layout_width=\"match_parent\"\n"
+        + "  android:layout_height=\"wrap_content\"\n"
+        + "  android:orientation=\"vertical\">\n");
 
     visitChildren(rootNode);
 
@@ -74,7 +77,7 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
           "  android:layout_height=\"wrap_content\"\n");
 
       if (style != null) {
-        printer.print(String.format("  style=\"%s\"\n", style));
+        printer.print(String.format("  style=\"@style/%s\"\n", style));
       }
 
       printer.print("  android:text=\"");

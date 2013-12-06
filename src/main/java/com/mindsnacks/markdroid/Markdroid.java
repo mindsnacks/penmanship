@@ -27,6 +27,18 @@ public class Markdroid {
     File layoutDirectory = new File(outputResourceDirectory, "layout");
     layoutDirectory.mkdirs();
 
+    File imagesDirectory = new File(inputMarkdownDirectory, "img");
+    if (imagesDirectory.isDirectory()) {
+      File drawableDirectory = new File(outputResourceDirectory, "drawable");
+      drawableDirectory.mkdirs();
+
+      try {
+        FileUtils.copyDirectory(imagesDirectory, drawableDirectory);
+      } catch (IOException e) {
+        throw new RuntimeException("Error copying drawable.", e);
+      }
+    }
+
     String markdown;
 
     try {

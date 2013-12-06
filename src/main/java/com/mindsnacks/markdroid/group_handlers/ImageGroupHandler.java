@@ -1,5 +1,6 @@
 package com.mindsnacks.markdroid.group_handlers;
 
+import java.net.URL;
 import org.pegdown.Printer;
 import org.pegdown.ast.ExpImageNode;
 import org.pegdown.ast.Node;
@@ -29,9 +30,14 @@ public class ImageGroupHandler extends BaseHandler {
   public void handle() {
     ExpImageNode imageNode = (ExpImageNode)this.rootNode.getChildren().get(0);
 
+    String imageFilenameWithoutExtension = imageNode.url.substring(0,
+        imageNode.url.lastIndexOf('.'));
+    String drawableSrc = String.format("@drawable/%s", imageFilenameWithoutExtension);
+
     printer.print("<ImageView android:layout_width=\"match_parent\"\n"
-        + "  android:layout_height=\"wrap_content\"\n");
-    printer.print(String.format("  android:src=\"%s\"", imageNode.url));
+        + "  android:layout_height=\"wrap_content\"\n"
+        + "  android:adjustViewBounds=\"true\"\n");
+    printer.print(String.format("  android:src=\"%s\"", drawableSrc));
     printer.print("/>\n");
   }
 }
