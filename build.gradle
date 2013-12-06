@@ -1,17 +1,21 @@
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'maven'
+apply plugin: 'nexus'
 
 group = 'com.mindsnacks'
-version = '1.0-SNAPSHOT'
+version = '0.5'
 
-buildscript{
+buildscript {
   repositories {
     mavenLocal()
+    mavenCentral()
+    jcenter()
   }
 
   dependencies {
     classpath 'commons-io:commons-io:2.4'
+    classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.4'
   }
 }
 
@@ -29,5 +33,38 @@ dependencies {
 install {
   repositories.mavenInstaller {
     pom.artifactId = 'markdroid'
+  }
+}
+
+uploadArchives {
+  repositories.mavenDeployer {
+    pom.artifactId = 'markdroid'
+  }
+}
+
+modifyPom {
+  project {
+    name 'Markdroid'
+    description 'A Gradle plugin that makes it easy to convert Markdown files to Android XML.'
+    url 'https://github.com/mindsnacks/markdroid'
+    inceptionYear '2013'
+
+    scm {
+      url 'https://github.com/mindsnacks/markdroid'
+      connection 'scm:git:git://github.com/mindsnacks/markdroid.git'
+      developerConnection 'scm:git:ssh://git@github.com/mindsnacks/markdroid.git'
+    }
+    licenses {
+      license {
+        name 'The Apache Software License, Version 2.0'
+        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        distribution 'repo'
+      }
+    }
+
+    organization {
+      name 'MindSnacks Inc.'
+      url 'http://mindsnacks.com'
+    }
   }
 }
