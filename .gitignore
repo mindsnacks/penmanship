@@ -32,7 +32,7 @@ proguard/
 
 # Gradle
 .gradle/
-buildSrc/build/
+build/
 local.properties
 
 # Other stuff
