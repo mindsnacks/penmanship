@@ -4,7 +4,7 @@ apply plugin: 'maven'
 apply plugin: 'nexus'
 
 group = 'com.mindsnacks'
-version = '0.5'
+version = '0.6-SNAPSHOT'
 
 buildscript {
   repositories {
