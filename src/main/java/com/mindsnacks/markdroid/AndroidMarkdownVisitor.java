@@ -27,11 +27,7 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
   public void visit(RootNode rootNode) {
     printer.print("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
     printer.print("<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n"
-        + "  android:layout_width=\"match_parent\"\n"
-        + "  android:layout_height=\"match_parent\">\n");
-    printer.print("<ScrollView android:layout_width=\"match_parent\"\n"
-        + "  android:layout_height=\"match_parent\">\n");
-    printer.print("<LinearLayout android:id=\"@+id/markdown_content\"\n"
+        + "  android:id=\"@+id/markdown_content\"\n"
         + "  style=\"@style/markdown_content\"\n"
         + "  android:layout_width=\"match_parent\"\n"
         + "  android:layout_height=\"wrap_content\"\n"
@@ -40,13 +36,11 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
     visitChildren(rootNode);
 
     printer.print("</LinearLayout>\n");
-    printer.print("</ScrollView>\n");
-    printer.print("</LinearLayout>\n");
   }
 
   @Override
   public void visit(SuperNode superNode) {
-    createTextView(superNode, null);
+    createTextView(superNode, "markdroid_text");
   }
 
   @Override
@@ -78,6 +72,7 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
 
       if (style != null) {
         printer.print(String.format("  style=\"@style/%s\"\n", style));
+        printer.print(String.format("  android:tag=\"%s\"\n", style));
       }
 
       printer.print("  android:text=\"");

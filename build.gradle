@@ -4,7 +4,7 @@ apply plugin: 'maven'
 apply plugin: 'nexus'
 
 group = 'com.mindsnacks'
-version = '0.6-SNAPSHOT'
+version = '0.8-SNAPSHOT'
 
 buildscript {
   repositories {
@@ -54,11 +54,19 @@ modifyPom {
       connection 'scm:git:git://github.com/mindsnacks/markdroid.git'
       developerConnection 'scm:git:ssh://git@github.com/mindsnacks/markdroid.git'
     }
+
     licenses {
       license {
         name 'The Apache Software License, Version 2.0'
         url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
         distribution 'repo'
+      }
+    }
+
+    developers {
+      developer {
+        name 'Tony Cosentini'
+        organization 'MindSnacks Inc.'
       }
     }
 

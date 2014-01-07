@@ -1,7 +1,9 @@
 package com.mindsnacks.markdroid;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.FileUtils;
 import org.pegdown.PegDownProcessor;
 import org.pegdown.ast.RootNode;
@@ -17,15 +19,7 @@ public class Markdroid {
       throw new RuntimeException("Input directory does not exist or is not a directory.");
     }
 
-    File markdownFile = new File(inputMarkdownDirectory, "index.md");
-    if (!markdownFile.exists() || markdownFile.isDirectory()) {
-      throw new RuntimeException("index.md file does not exist or is a directory.");
-    }
-
     outputResourceDirectory.mkdirs();
-
-    File layoutDirectory = new File(outputResourceDirectory, "layout");
-    layoutDirectory.mkdirs();
 
     File imagesDirectory = new File(inputMarkdownDirectory, "img");
     if (imagesDirectory.isDirectory()) {
@@ -39,25 +33,41 @@ public class Markdroid {
       }
     }
 
-    String markdown;
+    convertMarkdownFiles(inputMarkdownDirectory, outputResourceDirectory);
+  }
 
-    try {
-      markdown = Files.toString(markdownFile, Charsets.UTF_8);
-    } catch (IOException e) {
-      throw new RuntimeException("Error reading Markdown file.", e);
-    }
+  private void convertMarkdownFiles(File inputMarkdownDirectory, File outputResourceDirectory) {
+    File layoutDirectory = new File(outputResourceDirectory, "layout");
+    layoutDirectory.mkdirs();
 
-    PegDownProcessor pegDownProcessor = new PegDownProcessor();
-    RootNode rootNode = pegDownProcessor.parseMarkdown(markdown.toCharArray());
+    File[] markdownFiles = inputMarkdownDirectory.listFiles(new FilenameFilter() {
+      public boolean accept(File dir, String filename)
+      { return filename.endsWith(".md"); }
+    } );
 
-    AndroidMarkdownVisitor androidMarkdownVisitor = new AndroidMarkdownVisitor();
-    androidMarkdownVisitor.visit(rootNode);
+    for (File markdownFile : markdownFiles) {
+      String markdown;
 
-    File layoutXMLFile = new File(layoutDirectory, String.format("%s.xml", markdownFile.getParentFile().getName()));
-    try {
-      Files.write(androidMarkdownVisitor.printer.getString(), layoutXMLFile, Charsets.UTF_8);
-    } catch (IOException e) {
-      throw new RuntimeException("Error writing Android XML layout file.", e);
+      try {
+        markdown = Files.toString(markdownFile, Charsets.UTF_8);
+      } catch (IOException e) {
+        throw new RuntimeException("Error reading Markdown file.", e);
+      }
+
+      PegDownProcessor pegDownProcessor = new PegDownProcessor();
+      RootNode rootNode = pegDownProcessor.parseMarkdown(markdown.toCharArray());
+
+      AndroidMarkdownVisitor androidMarkdownVisitor = new AndroidMarkdownVisitor();
+      androidMarkdownVisitor.visit(rootNode);
+
+      String fileNameWithOutExt = FilenameUtils.removeExtension(markdownFile.getName());
+      File layoutXMLFile = new File(layoutDirectory, String.format("%s.xml", fileNameWithOutExt));
+
+      try {
+        Files.write(androidMarkdownVisitor.printer.getString(), layoutXMLFile, Charsets.UTF_8);
+      } catch (IOException e) {
+        throw new RuntimeException("Error writing Android XML layout file.", e);
+      }
     }
   }
 }
