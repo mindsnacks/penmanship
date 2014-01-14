@@ -54,20 +54,26 @@ public class Markdroid {
         throw new RuntimeException("Error reading Markdown file.", e);
       }
 
-      PegDownProcessor pegDownProcessor = new PegDownProcessor();
-      RootNode rootNode = pegDownProcessor.parseMarkdown(markdown.toCharArray());
-
-      AndroidMarkdownVisitor androidMarkdownVisitor = new AndroidMarkdownVisitor();
-      androidMarkdownVisitor.visit(rootNode);
+      String xml = xmlForMarkdown(markdown);
 
       String fileNameWithOutExt = FilenameUtils.removeExtension(markdownFile.getName());
       File layoutXMLFile = new File(layoutDirectory, String.format("%s.xml", fileNameWithOutExt));
 
       try {
-        Files.write(androidMarkdownVisitor.printer.getString(), layoutXMLFile, Charsets.UTF_8);
+        Files.write(xml, layoutXMLFile, Charsets.UTF_8);
       } catch (IOException e) {
         throw new RuntimeException("Error writing Android XML layout file.", e);
       }
     }
+  }
+
+  public String xmlForMarkdown(String markdown) {
+    PegDownProcessor pegDownProcessor = new PegDownProcessor();
+    RootNode rootNode = pegDownProcessor.parseMarkdown(markdown.toCharArray());
+
+    AndroidMarkdownVisitor androidMarkdownVisitor = new AndroidMarkdownVisitor();
+    androidMarkdownVisitor.visit(rootNode);
+
+    return androidMarkdownVisitor.render();
   }
 }

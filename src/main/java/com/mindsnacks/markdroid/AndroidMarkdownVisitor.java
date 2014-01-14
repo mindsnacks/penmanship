@@ -2,20 +2,29 @@ package com.mindsnacks.markdroid;
 
 import com.mindsnacks.markdroid.group_handlers.ImageGroupHandler;
 import com.mindsnacks.markdroid.group_handlers.TextNodeGroupHandler;
-import org.pegdown.Printer;
-import org.pegdown.ast.*;
+import java.util.Map;
+import org.pegdown.ast.BlockQuoteNode;
+import org.pegdown.ast.BulletListNode;
+import org.pegdown.ast.HeaderNode;
+import org.pegdown.ast.ListItemNode;
+import org.pegdown.ast.Node;
+import org.pegdown.ast.OrderedListNode;
+import org.pegdown.ast.ParaNode;
+import org.pegdown.ast.RootNode;
+import org.pegdown.ast.SuperNode;
 
 /** Created by Tony Cosentini Date: 11/26/13 Time: 5:04 PM */
 public class AndroidMarkdownVisitor extends BaseVisitor {
-  Printer printer = new Printer();
-
   private enum NodeGroupType {
     TEXT_NODE_GROUP, IMAGE_NODE_GROUP
   }
 
+  private AndroidXMLNode rootLayoutNode;
+  private AndroidXMLNode currentParentNode;
+
   @Override
   public void visit(HeaderNode headerNode) {
-    createTextView(headerNode, String.format("header_%d", headerNode.getLevel()));
+    handleNodeGroup(headerNode, String.format("header_%d", headerNode.getLevel()));
   }
 
   @Override
@@ -23,28 +32,64 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
     visitChildren(paraNode);
   }
 
+  @Override public void visit(OrderedListNode node) {
+    for (int i = 0; i < node.getChildren().size(); i++) {
+      Node child = node.getChildren().get(i);
+      int bulletNumber = i + 1;
+      handleListItem((ListItemNode)child, String.format("%d. ", bulletNumber));
+    }
+  }
+
+  @Override
+  public void visit(BulletListNode node) {
+    for (Node child : node.getChildren()) {
+      handleListItem((ListItemNode) child, "\u2022 ");
+    }
+  }
+
+  public void handleListItem(ListItemNode node, String prependBullet) {
+    for (Node child : node.getChildren()) {
+      if (child instanceof RootNode) {
+        RootNode root = (RootNode)child;
+
+        for (Node childFromRoot : root.getChildren()) {
+          handleNodeGroup(childFromRoot, "list_item", prependBullet);
+        }
+      } else {
+        throw new RuntimeException("Not a root node!");
+      }
+    }
+  }
+
+  @Override public void visit(BlockQuoteNode node) {
+    Map<String, String> attributes = AndroidXMLConstants.getDefaultLinearLayoutAttributes();
+    AndroidXMLNode blockquoteNode = new AndroidXMLNode(AndroidXMLConstants.LINEAR_LAYOUT, attributes);
+
+    AndroidXMLNode previousParentNode = currentParentNode;
+    currentParentNode.addChild(blockquoteNode);
+    currentParentNode = blockquoteNode;
+
+    visitChildren(node);
+
+    currentParentNode = previousParentNode;
+  }
+
   @Override
   public void visit(RootNode rootNode) {
-    printer.print("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-    printer.print("<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n"
-        + "  android:id=\"@+id/markdown_content\"\n"
-        + "  style=\"@style/markdown_content\"\n"
-        + "  android:layout_width=\"match_parent\"\n"
-        + "  android:layout_height=\"wrap_content\"\n"
-        + "  android:orientation=\"vertical\">\n");
+    Map<String, String> rootAttributes = AndroidXMLConstants.getDefaultLinearLayoutAttributes();
+    rootAttributes.put(AndroidXMLConstants.XMLNS_ANDROID, AndroidXMLConstants.ANDROID_NAMESPACE);
+    rootAttributes.put(AndroidXMLConstants.ID, "@+id/markdown_content");
+    rootAttributes.put(AndroidXMLConstants.STYLE, AndroidXMLConstants.STYLE_MARKDOWN_CONTENT);
+
+    rootLayoutNode = new AndroidXMLNode(AndroidXMLConstants.LINEAR_LAYOUT, rootAttributes);
+    currentParentNode = rootLayoutNode;
 
     visitChildren(rootNode);
-
-    printer.print("</LinearLayout>\n");
   }
 
   @Override
   public void visit(SuperNode superNode) {
-    createTextView(superNode, "markdroid_text");
-  }
-
-  @Override
-  public void visit(Node node) {
+    handleNodeGroup(superNode, "markdroid_text");
   }
 
   // Helpers
@@ -54,7 +99,7 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
     } else if (ImageGroupHandler.isValidNodeGroup(node)) {
       return NodeGroupType.IMAGE_NODE_GROUP;
     }else {
-      throw new RuntimeException("Unable to determine node group type.");
+      throw new RuntimeException("Unable to determine node group type: " + node.getClass().toString());
     }
   }
 
@@ -64,34 +109,22 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
     }
   }
 
-  private void createTextView(Node node, String style) {
+  private void handleNodeGroup(Node node, String style) {
+    handleNodeGroup(node, style, null);
+  }
+
+  private void handleNodeGroup(Node node, String style, String prependText) {
     NodeGroupType nodeGroupType = getNodeGroupType(node);
     if (nodeGroupType.equals(NodeGroupType.TEXT_NODE_GROUP)) {
-      printer.print("<TextView android:layout_width=\"match_parent\"\n" +
-          "  android:layout_height=\"wrap_content\"\n");
-
-      if (style != null) {
-        printer.print(String.format("  style=\"@style/%s\"\n", style));
-        printer.print(String.format("  android:tag=\"%s\"\n", style));
-      }
-
-      printer.print("  android:text=\"");
-
-      handleTextNodeGroup(node);
-
-      printer.print("\"/>\n");
+      TextNodeGroupHandler textNodeGroupHandler = new TextNodeGroupHandler(node, style, prependText);
+      currentParentNode.addChild(textNodeGroupHandler.render());
     } else {
-      handleImageNodeGroup(node);
+      ImageGroupHandler imageGroupHandler = new ImageGroupHandler(node);
+      currentParentNode.addChild(imageGroupHandler.render());
     }
   }
 
-  private void handleTextNodeGroup(Node node) {
-    TextNodeGroupHandler textNodeGroupHandler = new TextNodeGroupHandler(node, printer);
-    textNodeGroupHandler.handle();
-  }
-
-  private void handleImageNodeGroup(Node node) {
-    ImageGroupHandler imageGroupHandler = new ImageGroupHandler(node, printer);
-    imageGroupHandler.handle();
+  public String render() {
+    return rootLayoutNode.render();
   }
 }

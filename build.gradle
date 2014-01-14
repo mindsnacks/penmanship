@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'maven'
-apply plugin: 'nexus'
+//apply plugin: 'nexus'
 
 group = 'com.mindsnacks'
 version = '0.8-SNAPSHOT'
@@ -28,6 +28,7 @@ dependencies {
   compile localGroovy()
   compile 'org.pegdown:pegdown:1.4.1'
   compile 'com.google.guava:guava:15.0'
+  testCompile 'junit:junit:4.11'
 }
 
 install {
@@ -42,7 +43,7 @@ uploadArchives {
   }
 }
 
-modifyPom {
+/*modifyPom {
   project {
     name 'Markdroid'
     description 'A Gradle plugin that makes it easy to convert Markdown files to Android XML.'
@@ -75,4 +76,4 @@ modifyPom {
       url 'http://mindsnacks.com'
     }
   }
-}
+}*/
