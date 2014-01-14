@@ -53,7 +53,7 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
         RootNode root = (RootNode)child;
 
         for (Node childFromRoot : root.getChildren()) {
-          handleNodeGroup(childFromRoot, "list_item", prependBullet);
+          handleNodeGroup(childFromRoot, "markdroid_list_item", prependBullet);
         }
       } else {
         throw new RuntimeException("Not a root node!");
@@ -78,8 +78,8 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
   public void visit(RootNode rootNode) {
     Map<String, String> rootAttributes = AndroidXMLConstants.getDefaultLinearLayoutAttributes();
     rootAttributes.put(AndroidXMLConstants.XMLNS_ANDROID, AndroidXMLConstants.ANDROID_NAMESPACE);
-    rootAttributes.put(AndroidXMLConstants.ID, "@+id/markdown_content");
-    rootAttributes.put(AndroidXMLConstants.STYLE, AndroidXMLConstants.STYLE_MARKDOWN_CONTENT);
+    rootAttributes.put(AndroidXMLConstants.ID, AndroidXMLConstants.ID_MARKDROID_CONTENT);
+    rootAttributes.put(AndroidXMLConstants.STYLE, AndroidXMLConstants.STYLE_MARKDROID_CONTENT);
 
     rootLayoutNode = new AndroidXMLNode(AndroidXMLConstants.LINEAR_LAYOUT, rootAttributes);
     currentParentNode = rootLayoutNode;

@@ -17,11 +17,12 @@ public class AndroidXMLConstants {
   public static final String WRAP_CONTENT = "wrap_content";
 
   public static final String ID = "android:id";
+  public static final String ID_MARKDROID_CONTENT = "@+id/markdroid_content";
 
   public static final String TAG = "android:tag";
 
   public static final String STYLE = "style";
-  public static final String STYLE_MARKDOWN_CONTENT = "@style/markdown_content";
+  public static final String STYLE_MARKDROID_CONTENT = "@style/markdroid_content";
 
   public static final String ORIENTATION = "android:orientation";
   public static final String VERTICAL = "vertical";
