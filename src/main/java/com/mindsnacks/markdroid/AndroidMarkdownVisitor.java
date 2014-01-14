@@ -24,7 +24,7 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
 
   @Override
   public void visit(HeaderNode headerNode) {
-    handleNodeGroup(headerNode, String.format("header_%d", headerNode.getLevel()));
+    handleNodeGroup(headerNode, String.format("markdroid_header_%d", headerNode.getLevel()));
   }
 
   @Override

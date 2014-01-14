@@ -1,69 +1,52 @@
 package com.mindsnacks.markdroid;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.pegdown.PegDownProcessor;
 import org.pegdown.ast.RootNode;
-import com.google.common.io.*;
-import com.google.common.base.*;
 
 /** Created by Tony Cosentini Date: 11/26/13 Time: 4:50 PM */
 public class Markdroid {
-  public void convertMarkdownDirectoryToAndroidResources(File inputMarkdownDirectory, File outputResourceDirectory) {
-    System.out.println("Going to convert!");
+  public void convertImageFile(File inputImageFile, File outputResourceDirectory) {
+    File drawableDirectory = new File(outputResourceDirectory, "drawable");
+    drawableDirectory.mkdirs();
 
-    if (!inputMarkdownDirectory.exists() || !inputMarkdownDirectory.isDirectory()) {
-      throw new RuntimeException("Input directory does not exist or is not a directory.");
+    System.out.println(String.format("Copying drawable: %s to %s", inputImageFile.getName(), drawableDirectory.getAbsolutePath()));
+
+    try {
+      FileUtils.copyFileToDirectory(inputImageFile, drawableDirectory);
+    } catch (IOException e) {
+      throw new RuntimeException("Error copying drawable.", e);
     }
-
-    outputResourceDirectory.mkdirs();
-
-    File imagesDirectory = new File(inputMarkdownDirectory, "img");
-    if (imagesDirectory.isDirectory()) {
-      File drawableDirectory = new File(outputResourceDirectory, "drawable");
-      drawableDirectory.mkdirs();
-
-      try {
-        FileUtils.copyDirectory(imagesDirectory, drawableDirectory);
-      } catch (IOException e) {
-        throw new RuntimeException("Error copying drawable.", e);
-      }
-    }
-
-    convertMarkdownFiles(inputMarkdownDirectory, outputResourceDirectory);
   }
 
-  private void convertMarkdownFiles(File inputMarkdownDirectory, File outputResourceDirectory) {
+  public void convertMarkdownFile(File inputMarkdownFile, File outputResourceDirectory) {
     File layoutDirectory = new File(outputResourceDirectory, "layout");
     layoutDirectory.mkdirs();
 
-    File[] markdownFiles = inputMarkdownDirectory.listFiles(new FilenameFilter() {
-      public boolean accept(File dir, String filename)
-      { return filename.endsWith(".md"); }
-    } );
+    System.out.println(String.format("Converting Markdown: %s to %s", inputMarkdownFile.getName(), layoutDirectory.getAbsolutePath()));
 
-    for (File markdownFile : markdownFiles) {
-      String markdown;
+    String markdown;
 
-      try {
-        markdown = Files.toString(markdownFile, Charsets.UTF_8);
-      } catch (IOException e) {
-        throw new RuntimeException("Error reading Markdown file.", e);
-      }
+    try {
+      markdown = Files.toString(inputMarkdownFile, Charsets.UTF_8);
+    } catch (IOException e) {
+      throw new RuntimeException("Error reading Markdown file.", e);
+    }
 
-      String xml = xmlForMarkdown(markdown);
+    String xml = xmlForMarkdown(markdown);
 
-      String fileNameWithOutExt = FilenameUtils.removeExtension(markdownFile.getName());
-      File layoutXMLFile = new File(layoutDirectory, String.format("%s.xml", fileNameWithOutExt));
+    String fileNameWithOutExt = FilenameUtils.removeExtension(inputMarkdownFile.getName());
+    File layoutXMLFile = new File(layoutDirectory, String.format("%s.xml", fileNameWithOutExt));
 
-      try {
-        Files.write(xml, layoutXMLFile, Charsets.UTF_8);
-      } catch (IOException e) {
-        throw new RuntimeException("Error writing Android XML layout file.", e);
-      }
+    try {
+      Files.write(xml, layoutXMLFile, Charsets.UTF_8);
+    } catch (IOException e) {
+      throw new RuntimeException("Error writing Android XML layout file.", e);
     }
   }
 
