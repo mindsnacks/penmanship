@@ -27,8 +27,8 @@ public class TextNodeGroupHandler extends BaseHandler {
 
   protected TextNodeGroupHandler(Builder builder) {
     super(builder);
-    this.style = style;
-    this.prependText = prependText;
+    this.style = builder.style;
+    this.prependText = builder.prependText;
   }
 
   public static class Builder extends BaseHandler.Builder {
