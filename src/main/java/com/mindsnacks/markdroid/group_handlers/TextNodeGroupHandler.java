@@ -2,6 +2,9 @@ package com.mindsnacks.markdroid.group_handlers;
 
 import com.mindsnacks.markdroid.AndroidXMLConstants;
 import com.mindsnacks.markdroid.AndroidXMLNode;
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,11 +24,15 @@ import org.pegdown.ast.TextNode;
 public class TextNodeGroupHandler extends BaseHandler {
   private String style;
   private String prependText;
+  private String namespace;
+  private String customURIScheme;
 
-  public TextNodeGroupHandler(Node rootNode, String style, String prependText) {
+  public TextNodeGroupHandler(Node rootNode, String style, String prependText, String namespace, String customURIScheme) {
     super(rootNode);
     this.style = style;
     this.prependText = prependText;
+    this.namespace = namespace;
+    this.customURIScheme = customURIScheme;
   }
 
   @Override
@@ -64,7 +71,27 @@ public class TextNodeGroupHandler extends BaseHandler {
         FastEncoder.encode(String.format("</%s>", tag), stringBuilder);
       } else if (childClass.equals(ExpLinkNode.class)) {
         ExpLinkNode linkNode = (ExpLinkNode) child;
-        stringBuilder.append(FastEncoder.encode(String.format("<a href=\"%s\">", linkNode.url)));
+
+        URI uri;
+
+        try {
+          uri = new URI(linkNode.url);
+        } catch (URISyntaxException e) {
+          throw new RuntimeException(String.format("Unable to parse URI: %s", linkNode.url), e);
+        }
+
+        if (namespace != null && uri.getScheme().equals(customURIScheme)) {
+          File uriPath = new File(uri.getPath());
+          String filenameWithNameSpace = String.format("%s_%s", namespace, uriPath.getName());
+          String newPath = String.format("%s%s", uriPath.getParent(), filenameWithNameSpace);
+          try {
+            uri = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(), newPath, uri.getQuery(), uri.getFragment());
+          } catch (URISyntaxException e) {
+            throw new RuntimeException("Error creating new URI with namespace and custom scheme.", e);
+          }
+        }
+
+        stringBuilder.append(FastEncoder.encode(String.format("<a href=\"%s\">", uri.toString())));
         handleTextNodeGroup(linkNode, stringBuilder);
         stringBuilder.append(FastEncoder.encode("</a>"));
       } else if (childClass.equals(SuperNode.class)) {

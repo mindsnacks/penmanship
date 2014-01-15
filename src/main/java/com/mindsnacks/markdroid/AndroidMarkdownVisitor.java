@@ -22,6 +22,14 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
   private AndroidXMLNode rootLayoutNode;
   private AndroidXMLNode currentParentNode;
 
+  private String namespace;
+  private String customURIScheme;
+
+  public AndroidMarkdownVisitor(String namespace, String customURIScheme) {
+    this.namespace = namespace;
+    this.customURIScheme = customURIScheme;
+  }
+
   @Override
   public void visit(HeaderNode headerNode) {
     handleNodeGroup(headerNode, String.format("markdroid_header_%d", headerNode.getLevel()));
@@ -116,10 +124,11 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
   private void handleNodeGroup(Node node, String style, String prependText) {
     NodeGroupType nodeGroupType = getNodeGroupType(node);
     if (nodeGroupType.equals(NodeGroupType.TEXT_NODE_GROUP)) {
-      TextNodeGroupHandler textNodeGroupHandler = new TextNodeGroupHandler(node, style, prependText);
+      TextNodeGroupHandler textNodeGroupHandler = new TextNodeGroupHandler(node, style, prependText, namespace,
+          customURIScheme);
       currentParentNode.addChild(textNodeGroupHandler.render());
     } else {
-      ImageGroupHandler imageGroupHandler = new ImageGroupHandler(node);
+      ImageGroupHandler imageGroupHandler = new ImageGroupHandler(node, namespace);
       currentParentNode.addChild(imageGroupHandler.render());
     }
   }

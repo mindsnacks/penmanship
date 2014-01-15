@@ -10,6 +10,9 @@ import org.gradle.api.tasks.TaskOutputs
  * Created by Tony Cosentini Date: 12/5/13 Time: 4:04 PM
  */
 public class ConvertMarkdownDirectoryToAndroidResourcesDirectoryTask extends DefaultTask {
+  def namespace
+  def customURIScheme
+
   @TaskAction
   def convert() {
     Markdroid markdroid = new Markdroid();
@@ -33,9 +36,9 @@ public class ConvertMarkdownDirectoryToAndroidResourcesDirectoryTask extends Def
     for (File file : getInputs().getFiles().getFiles()) {
       def extension = FilenameUtils.getExtension(file.name).toLowerCase();
       if (markdownFileExtensions.contains(extension)) {
-        markdroid.convertMarkdownFile(file, outputDirectory);
+        markdroid.convertMarkdownFile(file, outputDirectory, namespace, customURIScheme);
       } else if (imageFileExtensions.contains(extension)) {
-        markdroid.convertImageFile(file, outputDirectory);
+        markdroid.convertImageFile(file, outputDirectory, namespace);
       } else {
         throw new RuntimeException("Unknown file type: " + file.name);
       }

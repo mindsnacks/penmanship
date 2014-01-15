@@ -8,7 +8,7 @@ import org.pegdown.ast.Node;
 
 /** Created by Tony Cosentini Date: 12/4/13 Time: 1:14 PM */
 public class ImageGroupHandler extends BaseHandler {
-  public ImageGroupHandler(Node rootNode) {
+  public ImageGroupHandler(Node rootNode, String namespace) {
     super(rootNode);
   }
 

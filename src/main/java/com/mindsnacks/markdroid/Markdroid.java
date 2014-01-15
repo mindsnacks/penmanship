@@ -11,20 +11,25 @@ import org.pegdown.ast.RootNode;
 
 /** Created by Tony Cosentini Date: 11/26/13 Time: 4:50 PM */
 public class Markdroid {
-  public void convertImageFile(File inputImageFile, File outputResourceDirectory) {
+  public void convertImageFile(File inputImageFile, File outputResourceDirectory, String namespace) {
     File drawableDirectory = new File(outputResourceDirectory, "drawable");
     drawableDirectory.mkdirs();
 
     System.out.println(String.format("Copying drawable: %s to %s", inputImageFile.getName(), drawableDirectory.getAbsolutePath()));
 
     try {
-      FileUtils.copyFileToDirectory(inputImageFile, drawableDirectory);
+      if (namespace != null) {
+        File namespacedFile = new File(outputResourceDirectory, String.format("%s_%s", namespace, inputImageFile.getName()));
+        FileUtils.copyFile(inputImageFile, namespacedFile);
+      } else {
+        FileUtils.copyFileToDirectory(inputImageFile, drawableDirectory);
+      }
     } catch (IOException e) {
       throw new RuntimeException("Error copying drawable.", e);
     }
   }
 
-  public void convertMarkdownFile(File inputMarkdownFile, File outputResourceDirectory) {
+  public void convertMarkdownFile(File inputMarkdownFile, File outputResourceDirectory, String namespace, String customURIScheme) {
     File layoutDirectory = new File(outputResourceDirectory, "layout");
     layoutDirectory.mkdirs();
 
@@ -38,10 +43,18 @@ public class Markdroid {
       throw new RuntimeException("Error reading Markdown file.", e);
     }
 
-    String xml = xmlForMarkdown(markdown);
+    String xml = xmlForMarkdown(markdown, namespace, customURIScheme);
 
     String fileNameWithOutExt = FilenameUtils.removeExtension(inputMarkdownFile.getName());
-    File layoutXMLFile = new File(layoutDirectory, String.format("%s.xml", fileNameWithOutExt));
+
+    String layoutXMLFilename;
+    if (namespace != null) {
+      layoutXMLFilename = String.format("%s_%s.xml", namespace, fileNameWithOutExt);
+    } else {
+      layoutXMLFilename = String.format("%s.xml", fileNameWithOutExt);
+    }
+
+    File layoutXMLFile = new File(layoutDirectory, layoutXMLFilename);
 
     try {
       Files.write(xml, layoutXMLFile, Charsets.UTF_8);
@@ -50,11 +63,11 @@ public class Markdroid {
     }
   }
 
-  public String xmlForMarkdown(String markdown) {
+  public String xmlForMarkdown(String markdown, String namespace, String customURLScheme) {
     PegDownProcessor pegDownProcessor = new PegDownProcessor();
     RootNode rootNode = pegDownProcessor.parseMarkdown(markdown.toCharArray());
 
-    AndroidMarkdownVisitor androidMarkdownVisitor = new AndroidMarkdownVisitor();
+    AndroidMarkdownVisitor androidMarkdownVisitor = new AndroidMarkdownVisitor(namespace, customURLScheme);
     androidMarkdownVisitor.visit(rootNode);
 
     return androidMarkdownVisitor.render();
