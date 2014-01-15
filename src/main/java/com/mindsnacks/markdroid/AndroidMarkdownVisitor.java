@@ -25,9 +25,28 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
   private String namespace;
   private String customURIScheme;
 
-  public AndroidMarkdownVisitor(String namespace, String customURIScheme) {
-    this.namespace = namespace;
-    this.customURIScheme = customURIScheme;
+  public static class Builder {
+    private String namespace;
+    private String customURIScheme;
+
+    public Builder namespace(String namespace) {
+      this.namespace = namespace;
+      return this;
+    }
+
+    public Builder customURIScheme(String customURIScheme) {
+      this.customURIScheme = customURIScheme;
+      return this;
+    }
+
+    public AndroidMarkdownVisitor build() {
+      return new AndroidMarkdownVisitor(this);
+    }
+  }
+
+  public AndroidMarkdownVisitor(Builder builder) {
+    this.namespace = builder.namespace;
+    this.customURIScheme = builder.customURIScheme;
   }
 
   @Override
@@ -124,11 +143,19 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
   private void handleNodeGroup(Node node, String style, String prependText) {
     NodeGroupType nodeGroupType = getNodeGroupType(node);
     if (nodeGroupType.equals(NodeGroupType.TEXT_NODE_GROUP)) {
-      TextNodeGroupHandler textNodeGroupHandler = new TextNodeGroupHandler(node, style, prependText, namespace,
-          customURIScheme);
+      TextNodeGroupHandler.Builder textNodeGroupHandlerBuilder = new TextNodeGroupHandler.Builder(node);
+      textNodeGroupHandlerBuilder.style(style);
+      textNodeGroupHandlerBuilder.prependText(prependText);
+      textNodeGroupHandlerBuilder.namespace(namespace);
+      textNodeGroupHandlerBuilder.customURIScheme(customURIScheme);
+
+      TextNodeGroupHandler textNodeGroupHandler = textNodeGroupHandlerBuilder.build();
       currentParentNode.addChild(textNodeGroupHandler.render());
     } else {
-      ImageGroupHandler imageGroupHandler = new ImageGroupHandler(node, namespace);
+      ImageGroupHandler.Builder imageGroupHandlerBuilder = new ImageGroupHandler.Builder(node);
+      imageGroupHandlerBuilder.namespace(namespace);
+
+      ImageGroupHandler imageGroupHandler = imageGroupHandlerBuilder.build();
       currentParentNode.addChild(imageGroupHandler.render());
     }
   }

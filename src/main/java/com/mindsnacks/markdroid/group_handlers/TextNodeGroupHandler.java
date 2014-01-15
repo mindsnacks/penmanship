@@ -24,15 +24,34 @@ import org.pegdown.ast.TextNode;
 public class TextNodeGroupHandler extends BaseHandler {
   private String style;
   private String prependText;
-  private String namespace;
-  private String customURIScheme;
 
-  public TextNodeGroupHandler(Node rootNode, String style, String prependText, String namespace, String customURIScheme) {
-    super(rootNode);
+  protected TextNodeGroupHandler(Builder builder) {
+    super(builder);
     this.style = style;
     this.prependText = prependText;
-    this.namespace = namespace;
-    this.customURIScheme = customURIScheme;
+  }
+
+  public static class Builder extends BaseHandler.Builder {
+    private String style;
+    private String prependText;
+
+    public Builder(Node rootNode) {
+      super(rootNode);
+    }
+
+    public Builder style(String style) {
+      this.style = style;
+      return this;
+    }
+
+    public Builder prependText(String prependText) {
+      this.prependText = prependText;
+      return this;
+    }
+
+    public TextNodeGroupHandler build() {
+      return new TextNodeGroupHandler(this);
+    }
   }
 
   @Override
@@ -95,7 +114,7 @@ public class TextNodeGroupHandler extends BaseHandler {
         handleTextNodeGroup(linkNode, stringBuilder);
         stringBuilder.append(FastEncoder.encode("</a>"));
       } else if (childClass.equals(SuperNode.class)) {
-        handleTextNodeGroup((SuperNode) child, stringBuilder);
+        handleTextNodeGroup(child, stringBuilder);
       } else {
         throw new RuntimeException("Unexpected node type: " + childClass);
       }

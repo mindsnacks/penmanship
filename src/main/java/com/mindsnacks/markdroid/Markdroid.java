@@ -67,7 +67,7 @@ public class Markdroid {
     PegDownProcessor pegDownProcessor = new PegDownProcessor();
     RootNode rootNode = pegDownProcessor.parseMarkdown(markdown.toCharArray());
 
-    AndroidMarkdownVisitor androidMarkdownVisitor = new AndroidMarkdownVisitor(namespace, customURLScheme);
+    AndroidMarkdownVisitor androidMarkdownVisitor = new AndroidMarkdownVisitor.Builder().namespace(namespace).customURIScheme(customURLScheme).build();
     androidMarkdownVisitor.visit(rootNode);
 
     return androidMarkdownVisitor.render();

@@ -8,8 +8,18 @@ import org.pegdown.ast.Node;
 
 /** Created by Tony Cosentini Date: 12/4/13 Time: 1:14 PM */
 public class ImageGroupHandler extends BaseHandler {
-  public ImageGroupHandler(Node rootNode, String namespace) {
-    super(rootNode);
+  public ImageGroupHandler(Builder builder) {
+    super(builder);
+  }
+
+  public static class Builder extends BaseHandler.Builder {
+    public Builder(Node rootNode) {
+      super(rootNode);
+    }
+
+    @Override public ImageGroupHandler build() {
+      return new ImageGroupHandler(this);
+    }
   }
 
   public static boolean isValidNodeGroup(Node node) {
