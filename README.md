@@ -7,7 +7,7 @@ Useful for apps that require rich content and an easy way to maintain.
 ## Build Process Integration
 Add Markdroid to your buildscript depdencies and apply the plug-in:
 
-```
+```groovy
 buildscript {
   repositories {
     mavenCentral()
@@ -24,7 +24,7 @@ apply plugin: 'markdroid'
 
 Then create a task to convert your Markdown files:
 
-```
+```groovy
 import com.mindsnacks.markdroid.gradle.ConvertMarkdownDirectoryToAndroidResourcesDirectoryTask
 import com.android.build.gradle.tasks.ProcessAndroidResources
 
@@ -41,7 +41,7 @@ tasks.withType(ProcessAndroidResources) { processResourcesTask ->
 
 Finally, just add your generated XML directory to your source set:
 
-```
+```groovy
 android {
   sourceSets {
     main {
@@ -59,7 +59,7 @@ Since there is not one super common way of using the generated XML, it's up to y
 
 You can get the AAPT generated layout ID for a filename String:
 
-```
+```java
 static int getResourceId(final String layoutFilename, final Context context) {
   return context.getResources().getIdentifier(layoutFilename, "layout", context.getPackageName());
 }
@@ -67,7 +67,7 @@ static int getResourceId(final String layoutFilename, final Context context) {
 
 Once the layout is loaded, you can iterate through all of the TextView using this useful method:
 
-```
+```java
 public List<TextView> getTextViews(ViewGroup container) {
   List<TextView> textViews = new ArrayList<TextView>();
 
@@ -87,7 +87,7 @@ public List<TextView> getTextViews(ViewGroup container) {
 
 This makes it easy to enable rich text (and set any custom fonts, or perform any other configuration you'd like) in each TextView like so:
 
-```
+```java
 private void configureTextViews(ViewGroup markdownContainer) {
   for (TextView textView : getTextViews(markdownContainer)) {
     textView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -97,7 +97,7 @@ private void configureTextViews(ViewGroup markdownContainer) {
 ```
 
 ## Markdown Support
-Markdown support is still somewhat limit. The following features work:
+Markdown support is still somewhat limited. The following features work:
 
 1. Text formatting (bold and italics)
 2. Headings
