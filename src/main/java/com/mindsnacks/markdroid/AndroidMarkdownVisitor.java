@@ -90,6 +90,8 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
 
   @Override public void visit(BlockQuoteNode node) {
     Map<String, String> attributes = AndroidXMLConstants.getDefaultLinearLayoutAttributes();
+    attributes.put(AndroidXMLConstants.STYLE, "@style/markdroid_blockquote");
+
     AndroidXMLNode blockquoteNode = new AndroidXMLNode(AndroidXMLConstants.LINEAR_LAYOUT, attributes);
 
     AndroidXMLNode previousParentNode = currentParentNode;

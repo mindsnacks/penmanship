@@ -43,11 +43,19 @@ public class ImageGroupHandler extends BaseHandler {
 
     String imageFilenameWithoutExtension = imageNode.url.substring(0,
         imageNode.url.lastIndexOf('.'));
-    String drawableSrc = String.format("@drawable/%s", imageFilenameWithoutExtension);
+
+    String drawableSrc;
+
+    if (namespace != null) {
+      drawableSrc = String.format("@drawable/%s_%s", namespace, imageFilenameWithoutExtension);
+    } else {
+      drawableSrc = String.format("@drawable/%s", imageFilenameWithoutExtension);
+    }
 
     Map<String, String> attributes = AndroidXMLConstants.getDefaultLayoutSizes();
     attributes.put(AndroidXMLConstants.ADJUST_VIEW_BOUNDS, AndroidXMLConstants.TRUE);
     attributes.put(AndroidXMLConstants.SOURCE, drawableSrc);
+    attributes.put(AndroidXMLConstants.STYLE, "@style/markdroid_image");
 
     AndroidXMLNode imageViewNode = new AndroidXMLNode(AndroidXMLConstants.IMAGE_VIEW, attributes);
     return imageViewNode;

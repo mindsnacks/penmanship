@@ -19,7 +19,7 @@ public class Markdroid {
 
     try {
       if (namespace != null) {
-        File namespacedFile = new File(outputResourceDirectory, String.format("%s_%s", namespace, inputImageFile.getName()));
+        File namespacedFile = new File(drawableDirectory, String.format("%s_%s", namespace, inputImageFile.getName()));
         FileUtils.copyFile(inputImageFile, namespacedFile);
       } else {
         FileUtils.copyFileToDirectory(inputImageFile, drawableDirectory);
