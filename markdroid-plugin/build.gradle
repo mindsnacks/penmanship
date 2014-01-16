@@ -26,6 +26,7 @@ repositories {
 dependencies {
   compile gradleApi()
   compile localGroovy()
+  compile 'commons-io:commons-io:2.4'
   compile 'org.pegdown:pegdown:1.4.1'
   compile 'com.google.guava:guava:15.0'
   testCompile 'junit:junit:4.11'

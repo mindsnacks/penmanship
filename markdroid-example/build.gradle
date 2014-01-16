@@ -1,13 +1,16 @@
 buildscript {
   repositories {
     mavenCentral()
+    mavenLocal()
   }
   dependencies {
     classpath 'com.android.tools.build:gradle:0.7+'
+    classpath 'com.mindsnacks:markdroid:0.8.4-SNAPSHOT'
   }
 }
 
 apply plugin: 'android'
+apply plugin: 'markdroid'
 
 android {
   compileSdkVersion 19
@@ -17,4 +20,23 @@ android {
     minSdkVersion 19
     targetSdkVersion 19
   }
+
+  sourceSets {
+    main {
+      res.srcDir 'markdroid_gen/res'
+    }
+  }
+}
+
+import com.mindsnacks.markdroid.gradle.ConvertMarkdownDirectoryToAndroidResourcesDirectoryTask
+import com.android.build.gradle.tasks.ProcessAndroidResources
+
+task generateMarkdownResources(type: ConvertMarkdownDirectoryToAndroidResourcesDirectoryTask) {
+  def inputTree = file('src/main/markdown')
+  inputs.dir inputTree
+  outputs.dir file("markdroid_gen/res")
+}
+
+tasks.withType(ProcessAndroidResources) { processResourcesTask ->
+  processResourcesTask.dependsOn generateMarkdownResources
 }
