@@ -48,7 +48,7 @@ Finally, just add your generated XML directory to your source set:
 android {
   sourceSets {
     main {
-      res.srcDir 'mardroid_gen/res'
+      res.srcDir 'markdroid_gen/res'
     }
   }
 }
