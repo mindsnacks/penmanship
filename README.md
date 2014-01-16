@@ -4,6 +4,9 @@ A simple Gradle plug-in that makes it easy to convert Markdown documents into na
 
 Useful for apps that require rich content and an easy way to maintain.
 
+| ![Screenshot 1](https://raw.github.com/mindsnacks/markdroid/master/readme_assets/markdroid_1.png)         | ![Screenshot 2](https://raw.github.com/mindsnacks/markdroid/master/readme_assets/markdroid_2.png)           |
+| ------------- | ------------- |
+
 ## Build Process Integration
 Add Markdroid to your buildscript depdencies and apply the plug-in:
 
