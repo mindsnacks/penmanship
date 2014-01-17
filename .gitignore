@@ -1,3 +1,6 @@
+# Generated Markdown layout files
+markdroid-example/markdroid_gen/
+
 # built application files
 *.apk
 *.ap_

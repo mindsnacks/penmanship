@@ -6,7 +6,7 @@ buildscript {
 
   dependencies {
     classpath 'com.android.tools.build:gradle:0.7+'
-    classpath 'com.mindsnacks:markdroid:0.8.5-SNAPSHOT'
+    classpath 'com.mindsnacks:markdroid:0.8.4-SNAPSHOT'
     classpath 'com.jakewharton.hugo:hugo-plugin:1.0.1'
   }
 }
