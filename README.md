@@ -56,6 +56,8 @@ android {
 
 ## App Integration
 
+### Loading Layouts
+
 Since there is not one super common way of using the generated XML, it's up to you to inflate the layouts and integrate them into your app. Markdroid provides a very small helper library to make this easy, just add it as an app dependency:
 
 ```groovy
@@ -63,6 +65,10 @@ compile 'com.mindsnacks:markdroid-helper:0.8.5-SNAPSHOT@aar'
 ```
 
 This library provides a few methods for easily loading layout files and enabling rich text. To see an example, check out [MainActivity.java in the example project](https://github.com/mindsnacks/markdroid/blob/master/markdroid-example/src/main/java/com/markdroid/example/MainActivity.java).
+
+### Styling Layouts
+
+TODO: Finish this section.
 
 ## Markdown Support
 Markdown support is still somewhat limited. The following features work:
