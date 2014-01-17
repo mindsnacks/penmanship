@@ -68,7 +68,7 @@ This library provides a few methods for easily loading layout files and enabling
 
 ### Styling Layouts
 
-TODO: Finish this section.
+Each Markdown element gets its own layout in the generated layout XML files. It's up to you to implement these styles. For an example implementation, refer to the [example project's styles file](https://github.com/mindsnacks/markdroid/blob/master/markdroid-example/src/main/res/values/markdroid_styles.xml).
 
 ## Markdown Support
 Markdown support is still somewhat limited. The following features work:
