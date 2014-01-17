@@ -1,1 +1,1 @@
-include ':markdroid-plugin', ':markdroid-example'
+include ':markdroid-plugin', ':markdroid-helper', ':markdroid-example'

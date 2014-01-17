@@ -1,10 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'groovy'
-apply plugin: 'maven'
 apply plugin: 'nexus'
-
-group = 'com.mindsnacks'
-version = '0.8.4-SNAPSHOT'
 
 buildscript {
   repositories {
@@ -37,27 +33,26 @@ modifyPom {
     artifactId 'markdroid'
     name 'Markdroid'
     description 'A Gradle plugin that makes it easy to convert Markdown files to Android XML.'
-    url 'https://github.com/mindsnacks/markdroid'
-    inceptionYear '2013'
+    url POM_URL
 
     scm {
-      url 'https://github.com/mindsnacks/markdroid'
-      connection 'scm:git:git://github.com/mindsnacks/markdroid.git'
-      developerConnection 'scm:git:ssh://git@github.com/mindsnacks/markdroid.git'
+      url POM_SCM_URL
+      connection POM_SCM_CONNECTION
+      developerConnection POM_SCM_DEV_CONNECTION
     }
 
     licenses {
       license {
-        name 'The Apache Software License, Version 2.0'
-        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-        distribution 'repo'
+        name POM_LICENCE_NAME
+        url POM_LICENCE_URL
+        distribution POM_LICENCE_DIST
       }
     }
 
     developers {
       developer {
-        name 'Tony Cosentini'
-        organization 'MindSnacks Inc.'
+        id POM_DEVELOPER_ID
+        name POM_DEVELOPER_NAME
       }
     }
 

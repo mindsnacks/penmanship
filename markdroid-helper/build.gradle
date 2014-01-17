@@ -1,0 +1,35 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:0.7+'
+    classpath 'org.gradle.api.plugins:gradle-nexus-plugin:0.6.1'
+  }
+}
+
+apply plugin: 'android-library'
+apply plugin: 'maven'
+
+android {
+  compileSdkVersion 19
+  buildToolsVersion '19'
+}
+
+// Use Maven to install the aar into our local maven repo. Quick and easy (and dirty).
+task install(type: Exec, dependsOn: assemble) {
+  // TODO get aar path dynamically when i'm not being lazy
+  executable = 'mvn'
+  args = [
+      "install:install-file",
+      "-DgroupId=com.mindsnacks",
+      "-DartifactId=markdroid-helper",
+      "-Dversion=${version}",
+      "-Dpackaging=aar",
+      "-Dfile=build/libs/markdroid-helper-${version}.aar"
+  ]
+}
+
+apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

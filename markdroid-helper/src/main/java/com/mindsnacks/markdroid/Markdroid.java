@@ -1,4 +1,4 @@
-package com.markdroid.example;
+package com.mindsnacks.markdroid;
 
 import android.content.Context;
 import android.text.Html;
