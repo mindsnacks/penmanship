@@ -56,48 +56,19 @@ android {
 
 ## App Integration
 
-Since there is not one super common way of using the generated XML, it's up to you to inflate the layouts and integrate them into your app. Below are some integration tips for loading and managaing the Markdown content. I'm planning on extracting these into another library that your app can use, but for now it needs to be handled manually.
+### Loading Layouts
 
-### Some App Integration Tips
+Since there is not one super common way of using the generated XML, it's up to you to inflate the layouts and integrate them into your app. Markdroid provides a very small helper library to make this easy, just add it as an app dependency:
 
-You can get the AAPT generated layout ID for a filename String:
-
-```java
-static int getResourceId(final String layoutFilename, final Context context) {
-  return context.getResources().getIdentifier(layoutFilename, "layout", context.getPackageName());
-}
+```groovy
+compile 'com.mindsnacks:markdroid-helper:CURRENT-VERSION@aar'
 ```
 
-Once the layout is loaded, you can iterate through all of the TextView using this useful method:
+This library provides a few methods for easily loading layout files and enabling rich text. To see an example, check out [MainActivity.java in the example project](https://github.com/mindsnacks/markdroid/blob/master/markdroid-example/src/main/java/com/markdroid/example/MainActivity.java).
 
-```java
-public List<TextView> getTextViews(ViewGroup container) {
-  List<TextView> textViews = new ArrayList<TextView>();
+### Styling Layouts
 
-  for (int i = 0; i < container.getChildCount(); i++) {
-    View v = container.getChildAt(i);
-    if (v instanceof TextView) {
-      textViews.add((TextView) container.getChildAt(i));
-    } else if (v instanceof ViewGroup) {
-      textViews.addAll(getTextViews((ViewGroup) v));
-    }
-  }
-
-  return textViews;
-}
-
-``` 
-
-This makes it easy to enable rich text (and set any custom fonts, or perform any other configuration you'd like) in each TextView like so:
-
-```java
-private void configureTextViews(ViewGroup markdownContainer) {
-  for (TextView textView : getTextViews(markdownContainer)) {
-    textView.setMovementMethod(LinkMovementMethod.getInstance());
-    textView.setText(Html.fromHtml(textView.getText().toString()));
-  }
-}
-```
+Each Markdown element gets its own layout in the generated layout XML files. It's up to you to implement these styles. For an example implementation, refer to the [example project's styles file](https://github.com/mindsnacks/markdroid/blob/master/markdroid-example/src/main/res/values/markdroid_styles.xml).
 
 ## Markdown Support
 Markdown support is still somewhat limited. The following features work:
