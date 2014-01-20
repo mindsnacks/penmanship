@@ -45,4 +45,16 @@ public class AndroidXMLNode {
 
     return sb.toString();
   }
+
+  public List<AndroidXMLNode> getChildren() {
+    return children;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public Map<String, String> getAttributes() {
+    return attributes;
+  }
 }

@@ -1,9 +1,11 @@
 package com.mindsnacks.markdroid.test;
 
 import com.mindsnacks.markdroid.AndroidXMLNode;
+
+import org.junit.Test;
+
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,7 +24,7 @@ public class AndroidXMLNodeTest {
     AndroidXMLNode childNode = new AndroidXMLNode("childNode", new HashMap<String, String>());
     rootNode.addChild(childNode);
 
-    assertEquals("<rootNode testOne=\"&quot;This is a test attribute.\" testTwo=\"This is another test attribute.\" >\n"
+    assertEquals("<rootNode testOne=\"\"This is a test attribute.\" testTwo=\"This is another test attribute.\" >\n"
         + "<childNode />\n"
         + "</rootNode>\n", rootNode.render());
   }

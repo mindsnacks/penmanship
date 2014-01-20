@@ -165,4 +165,8 @@ public class AndroidMarkdownVisitor extends BaseVisitor {
   public String render() {
     return rootLayoutNode.render();
   }
+
+  public AndroidXMLNode getRootLayoutNode() {
+    return rootLayoutNode;
+  }
 }
