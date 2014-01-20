@@ -102,7 +102,7 @@ public class TextNodeGroupHandler extends BaseHandler {
         if (namespace != null && uri.getScheme().equals(customURIScheme)) {
           File uriPath = new File(uri.getPath());
           String filenameWithNameSpace = String.format("%s_%s", namespace, uriPath.getName());
-          String newPath = String.format("%s%s", uriPath.getParent(), filenameWithNameSpace);
+          String newPath = String.format("%s/%s", uriPath.getParent(), filenameWithNameSpace);
           try {
             uri = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(), newPath, uri.getQuery(), uri.getFragment());
           } catch (URISyntaxException e) {

@@ -10,10 +10,14 @@ import org.pegdown.ast.RootNode;
  */
 public class ElementTest {
     protected AndroidXMLNode convertMarkdownToAndroidNodes(String markdown) {
+      return convertMarkdownToAndroidNodes(markdown, null, null);
+    }
+
+    protected AndroidXMLNode convertMarkdownToAndroidNodes(String markdown, String customURIScheme, String customNamespace) {
       PegDownProcessor pegDownProcessor = new PegDownProcessor();
       RootNode rootNode = pegDownProcessor.parseMarkdown(markdown.toCharArray());
 
-      AndroidMarkdownVisitor androidMarkdownVisitor = new AndroidMarkdownVisitor.Builder().build();
+      AndroidMarkdownVisitor androidMarkdownVisitor = new AndroidMarkdownVisitor.Builder().customURIScheme(customURIScheme).namespace(customNamespace).build();
       androidMarkdownVisitor.visit(rootNode);
 
       return androidMarkdownVisitor.getRootLayoutNode();
