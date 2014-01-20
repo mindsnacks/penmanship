@@ -1,1 +1,1 @@
-include ':markdroid-plugin', ':markdroid-helper', ':markdroid-example'
+include ':penmanship-plugin', ':penmanship-helper', ':penmanship-example'

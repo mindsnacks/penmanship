@@ -1,0 +1,53 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    mavenLocal()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:0.7+'
+    classpath 'com.mindsnacks:penmanship:0.8.5-SNAPSHOT'
+    classpath 'com.jakewharton.hugo:hugo-plugin:1.0.1'
+  }
+}
+
+apply plugin: 'android'
+apply plugin: 'penmanship'
+
+android {
+  compileSdkVersion 19
+  buildToolsVersion "19"
+
+  defaultConfig {
+    minSdkVersion 19
+    targetSdkVersion 19
+  }
+
+  sourceSets {
+    main {
+      res.srcDir 'penmanship_gen/res'
+    }
+  }
+}
+
+repositories {
+  mavenCentral()
+  mavenLocal()
+}
+
+dependencies {
+  compile 'com.mindsnacks:penmanship-helper:0.8.5-SNAPSHOT@aar'
+}
+
+import com.mindsnacks.penmanship.gradle.ConvertMarkdownDirectoryToAndroidResourcesDirectoryTask
+import com.android.build.gradle.tasks.ProcessAndroidResources
+
+task generateMarkdownResources(type: ConvertMarkdownDirectoryToAndroidResourcesDirectoryTask) {
+  def inputTree = file('src/main/markdown')
+  inputs.dir inputTree
+  outputs.dir file("penmanship_gen/res")
+}
+
+tasks.withType(ProcessAndroidResources) { processResourcesTask ->
+  processResourcesTask.dependsOn generateMarkdownResources
+}

@@ -1,14 +1,14 @@
-# Markdroid
+# Penmanship
 
 A simple Gradle plug-in that makes it easy to convert Markdown documents into native Android layout XML files.
 
 Useful for apps that require rich content and an easy way to maintain.
 
-| ![Screenshot 1](https://raw.github.com/mindsnacks/markdroid/master/readme_assets/markdroid_1.png)         | ![Screenshot 2](https://raw.github.com/mindsnacks/markdroid/master/readme_assets/markdroid_2.png)           |
+| ![Screenshot 1](https://raw.github.com/mindsnacks/penmanship/master/readme_assets/penmanship_1.png)         | ![Screenshot 2](https://raw.github.com/mindsnacks/penmanship/master/readme_assets/penmanship_2.png)           |
 | ------------- | ------------- |
 
 ## Build Process Integration
-Add Markdroid to your buildscript depdencies and apply the plug-in:
+Add Penmanship to your buildscript depdencies and apply the plug-in:
 
 ```groovy
 buildscript {
@@ -18,23 +18,23 @@ buildscript {
   
   dependencies {
     classpath 'com.android.tools.build:gradle:0.7+'
-    classpath 'com.mindsnacks:markdroid:CURRENT-VERSION'
+    classpath 'com.mindsnacks:penmanship:CURRENT-VERSION'
   }
 }
 
-apply plugin: 'markdroid'
+apply plugin: 'penmanship'
 ```
 
 Then create a task to convert your Markdown files:
 
 ```groovy
-import com.mindsnacks.markdroid.gradle.ConvertMarkdownDirectoryToAndroidResourcesDirectoryTask
+import com.mindsnacks.penmanship.gradle.ConvertMarkdownDirectoryToAndroidResourcesDirectoryTask
 import com.android.build.gradle.tasks.ProcessAndroidResources
 
 task generateMarkdownResources(type: ConvertMarkdownDirectoryToAndroidResourcesDirectoryTask) {
   def inputTree = file('path/to/directory/containing_only_your_markdown/and_images')
   inputs.dir inputTree
-  outputs.dir file("markdroid_gen/res")
+  outputs.dir file("penmanship_gen/res")
 }
 
 tasks.withType(ProcessAndroidResources) { processResourcesTask ->
@@ -48,7 +48,7 @@ Finally, just add your generated XML directory to your source set:
 android {
   sourceSets {
     main {
-      res.srcDir 'markdroid_gen/res'
+      res.srcDir 'penmanship_gen/res'
     }
   }
 }
