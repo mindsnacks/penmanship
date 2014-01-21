@@ -6,4 +6,4 @@ jdk:
 notifications:
   email: false
 
-script: ./gradlew test
+script: ./gradlew :penmanship-plugin:test
