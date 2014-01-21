@@ -64,11 +64,11 @@ Since there is not one super common way of using the generated XML, it's up to y
 compile 'com.mindsnacks:markdroid-helper:CURRENT-VERSION@aar'
 ```
 
-This library provides a few methods for easily loading layout files and enabling rich text. To see an example, check out [MainActivity.java in the example project](https://github.com/mindsnacks/markdroid/blob/master/markdroid-example/src/main/java/com/markdroid/example/MainActivity.java).
+This library provides a few methods for easily loading layout files and enabling rich text. To see an example, check out [MainActivity.java in the example project](https://github.com/mindsnacks/penmanship/blob/master/penmanship-example/src/main/java/com/penmanship/example/MainActivity.java).
 
 ### Styling Layouts
 
-Each Markdown element gets its own layout in the generated layout XML files. It's up to you to implement these styles. For an example implementation, refer to the [example project's styles file](https://github.com/mindsnacks/markdroid/blob/master/markdroid-example/src/main/res/values/markdroid_styles.xml).
+Each Markdown element gets its own layout in the generated layout XML files. It's up to you to implement these styles. For an example implementation, refer to the [example project's styles file](https://github.com/mindsnacks/penmanship/blob/master/penmanship-example/src/main/res/values/markdroid_styles.xml).
 
 ## Markdown Support
 Markdown support is still somewhat limited. The following features work:
